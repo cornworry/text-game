@@ -1,0 +1,51 @@
+Start simple:
+		
+	By default you start with no built in goals. 
+	You acquire buffs and debuffs depending on your actions. 
+	Don't define stats or traits until I need them.
+	
+commands
+    ? - help page
+    hint? - hint for the current step
+    repeat? - repeat the message
+    me? - list character attributes
+    examine <entity> - look at something in particular
+    search <entity?> - search all surroundings or search a specific item
+    grab <entity>
+    go <entity>
+
+Entities
+	item
+		- might be carried/picked up
+		- not usually living
+
+	area
+        - description
+		- IHasEntities
+
+	portal
+        - two different Areas
+		
+	persons
+		- Name
+        - Description
+        - IHasEntities
+
+Frames
+    Frames are the scenes of the game. Each frame should start end end with a delineation, something like a top and bottom border. A frame is made up of many details.
+        - Things that might take up a whole frame:
+            - Examination of a room, ending when the user takes an action that changes it's nature.
+            - Listing all character attributes as in the `me?` command.
+            - The help page.
+
+Details
+    Details are individual sentences or pieces of a scene. A frame contains many details. Details might include:
+        - A question
+        - A message about the current scene
+        - An answer to a query such as examine, or search
+        - A `repeat?` command
+        
+	
+A game of 3 areas.
+	Main character: a prisoner in the dungeon beneath a catastrophe. No memory to start. Can recover memories over the course of the game.
+    One goal: Escape your cell
