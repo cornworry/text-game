@@ -35,4 +35,13 @@ namespace TextGame.Entities
         Grab,
         Go
     }
+
+        public class CommandParser
+    {
+        public static Command? From(string input) {
+
+            if(!Enum.TryParse(typeof(Command), input, true, out var command)) return null;
+            return (Command?) command;
+        }
+    }
 }

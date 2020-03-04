@@ -32,7 +32,7 @@ namespace TextGame
         }
 
         public static Character HandleInput(Character character) {
-            var input = WritePrompt("What now?");
+            var input = GetInput("What now?");
             character.Context.HandleInput(character, input);
             return character;
         }
@@ -42,7 +42,7 @@ namespace TextGame
             Console.WriteLine("Help text coming soon...", ConsoleColor.Green);
         }
         
-        public static string WritePrompt(string prompt){
+        public static string GetInput(string prompt){
             WriteLine(prompt, ConsoleColor.Green);
             Console.Write(" > ");
             return Console.ReadLine();

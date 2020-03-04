@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 using TextGame.Entities;
 using TextGame.Entities.Common;
 using TextGame.Flow;
@@ -13,19 +14,20 @@ namespace TextGame.ExampleCampaign
 
         public static Character Act(Character character)
         {
-            var introMessage = $@"Your head aches. Your head feels wet and sticky.
-You're sitting on a hard stone floor in a small room. A door with bars at face height dominates one wall. One other person is lies in a heap in the corner.
-Your name is {character.Name}... you don't remember how you got here.";
+            var introBuilder = new StringBuilder();
+            introBuilder.AppendLine("Your head aches. Your head feels wet and sticky.")
+                        .AppendLine("You're sitting on a hard stone floor in a small room. A door with bars at face height dominates one wall. One other person is lies in a heap in the corner.")
+                        .AppendLine($"Your name is {character.Name}... you don't remember how you got here.");
 
-            var startingLocation = Area.Named("a small cell")
+            var smallCell = Area.Named("a small cell")
                 .ContainingEntities(
                     Item.Named("body").AddHandler(Command.Examine, CheckTheBody),
                     Portal.To(Area.Named("guard room"))
                 ); 
 
-            Game.FrameStack.Push(new Cutscene(introMessage, character => {
+            Game.FrameStack.Push(new Cutscene(introBuilder.ToString(), character => {
                 character.AddDebuff("head wound");
-                character.SetContext(startingLocation);
+                character.SetContext(smallCell);
                 return character;
             }).Play);
             
