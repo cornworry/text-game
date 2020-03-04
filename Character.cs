@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TextGame.Entities;
 using TextGame.Entities.Common;
 using TextGame.Flow;
 using TextGame.Flow.Common;
@@ -9,21 +10,21 @@ namespace TextGame {
     {
         public string Name { get; private set; }
         public List<string> Debuffs { get; } = new List<string>();
-        public Area Location { get; private set; }
+        public ICanBeContext Context { get; private set; }
 
         public static Character GatherCharacter()
         {
+            var character = new Character();
             Func<string, bool> emptyTest = str => !string.IsNullOrEmpty(str);
-            var nameStep = Question.Continue(prompt: "What is your name?", validate: emptyTest);
-            (var step, var name) = nameStep.HandleStep(arg => arg);
-            
-            return new Character { Name = name };
+            character.Name = Question.With(prompt: "What is your name?", validate: emptyTest).GetInput();
+            return character;
         }
 
-        internal void SetLocation(Area location) 
+        internal void SetContext(ICanBeContext context) 
         {
-            Game.WriteLine($"You are now in a new location: {location.Name}.", ConsoleColor.DarkGreen);
-            Location = location;
+            var location = context as Area;
+            if(location != null) Game.WriteLine($"You are now in a new location: {context.Name}.", ConsoleColor.DarkGreen);
+            Context = location;
         }
 
         internal void AddDebuff(string v)

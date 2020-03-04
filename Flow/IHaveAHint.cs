@@ -2,7 +2,7 @@ using System;
 
 namespace TextGame.Flow
 {
-    public interface IHaveAHint : ITakeAFrame
+    public interface IHaveAHint : IDetail
     {
         string Hint { get; }
     }

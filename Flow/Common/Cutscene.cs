@@ -2,30 +2,24 @@ using System;
 
 namespace TextGame.Flow.Common
 {
-    public class Cutscene : ITakeAFrame
+    public class Cutscene
     {
+        private Func<Character, Character> _effects;
+
         public string Message { get; private set; }
 
-        public ITakeAFrame AndThen { get; private set; }
-
-        private Cutscene() {}
-
-        public static Cutscene Play(string message, ITakeAFrame andThen = null)
-        {
-            return new Cutscene {
-                Message = message,
-                AndThen = andThen
-             };
+        public Cutscene(string message, Func<Character, Character> effects = null) 
+        { 
+            Message = message; 
+            _effects = effects;
         }
 
-        public ITakeAFrame Next(Character character, string input)
+        public Character Play(Character character)
         {
-            return AndThen;
-        }
-
-        internal static object Play(string message, object andThen)
-        {
-            throw new NotImplementedException();
+            return Frame.Do(() => {
+                Game.WriteLine($"{Message}\n", ConsoleColor.Green);
+                return _effects?.Invoke(character) ?? character;
+            });
         }
     }
 }

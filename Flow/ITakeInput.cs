@@ -2,7 +2,7 @@ using System;
 
 namespace TextGame.Flow
 {
-    public interface ITakeInput : ITakeAFrame
+    public interface ITakeInput : IDetail
     {
         string Prompt { get; }
         bool IsValid(string input);
@@ -10,17 +10,13 @@ namespace TextGame.Flow
 
     public static class ITakeInputExtensions
     {
-        public static ITakeAFrame HandleInput(this ITakeInput step, Character character) {
-            var response = step.PromptUntilValidInput();
-            var nextStep = step.Next(character, response);
-            return nextStep;
-        }
-
-        public static Tuple<ITakeAFrame, TOutput> HandleStep<TOutput>(this ITakeInput step, Func<string, TOutput> transformInput, Character character = null) {
-            var response = step.PromptUntilValidInput();
-            var nextStep = step.Next(character, response);
-            var output   = transformInput(response);
-            return Tuple.Create(nextStep, output);
+        public static string GetInput(this ITakeInput inputDevice)
+        {
+            string input = null;
+            while(input == null || !inputDevice.IsValid(input)) {
+                input = Game.WritePrompt(inputDevice.Prompt);
+            }
+            return input;
         }
     }
 }

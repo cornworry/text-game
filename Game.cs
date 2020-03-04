@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using TextGame.Flow;
+using TextGame.Flow.Common;
 using TextGame.ExampleCampaign;
 
 namespace TextGame
@@ -8,7 +9,7 @@ namespace TextGame
     class Game
     {
         private static Character _character;
-        private static Stack<Func<Character, Character>> FrameStack { get; } = new Stack<Func<Character, Character>>();
+        public static Stack<Func<Character, Character>> FrameStack { get; } = new Stack<Func<Character, Character>>();
 
         static void Main(string[] args)
         {
@@ -21,13 +22,19 @@ namespace TextGame
                 while(_character != null)
                 {
                     if (!FrameStack.TryPop(out var frame)) {
-                        _character = null;
-                        return;
+                        _character = HandleInput(_character);
+                        continue;
                     }
 
                     Frame.Do(() => _character = frame(_character));
                 }
             }
+        }
+
+        public static Character HandleInput(Character character) {
+            var input = WritePrompt("What now?");
+            character.Context.HandleInput(character, input);
+            return character;
         }
 
         public static void WriteHelpText()

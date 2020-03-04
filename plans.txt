@@ -44,6 +44,13 @@ Details
         - A message about the current scene
         - An answer to a query such as examine, or search
         - A `repeat?` command
+
+    - contains a message
+    - maybe something about formatting?
+
+    IHaveAHint
+    IHaveAMessage
+    
         
 	
 A game of 3 areas.
