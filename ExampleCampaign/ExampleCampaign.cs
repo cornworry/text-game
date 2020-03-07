@@ -41,15 +41,15 @@ namespace TextGame.ExampleCampaign
 
         private static Character ExamineTheBody(Character character, Area smallCell)
         {
-            var message = "The man is curled in a ball facing the corner. His shirt is torn and bloody. Shackles are affixed to his ankles. He chest rises and falls laboriously.";
-            Game.WriteLine(message);
+            Game.WriteLine("The man is curled in a ball facing the corner. His shirt is torn and bloody. Shackles are affixed to his ankles. He chest rises and falls laboriously.");
             return character;
         }
 
         private static Character SearchTheBody(Character character)
         {
-            var message = "The man is curled in a ball facing the corner. His shirt is torn and bloody. Shackles are affixed to his ankles. He chest rises and falls laboriously.";
-            Game.WriteLine(message);
+            Game.WriteLine("As you begin searching the man he rolls onto his back. His eyelids part slightly to reveal his eyes rolled in the back of his head. He lets out a shudder.");
+            Game.WriteLine("\"PLEASE NO! I haven't...\"", ConsoleColor.Yellow);
+            Game.WriteLine("His chest lurches upward as he lets out a sigh. His body slumps back settling into unconsciousness.");
             return character;
         }
     }

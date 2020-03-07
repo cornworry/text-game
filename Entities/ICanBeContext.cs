@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
@@ -61,20 +60,5 @@ namespace TextGame.Entities
             outputEntity = null;
             return false;
         }
-    }
-
-    public interface IHandleActions : ICanBeHidden, IHaveAName
-    {
-        Dictionary<Command, Func<Character, Character>> ActionMap { get; }
-    }
-
-    public interface ICanBeHidden 
-    {
-        bool IsKnown { get; }
-    }
-
-    public interface IHaveAName
-    {
-        string Name { get; }
     }
 }
