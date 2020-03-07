@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using TextGame.Entities;
 using TextGame.Flow;
-using TextGame.Flow.Common;
-using TextGame.ExampleCampaign;
 
 namespace TextGame
 {

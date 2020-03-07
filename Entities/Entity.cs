@@ -4,12 +4,12 @@ using TextGame.Flow;
 
 namespace TextGame.Entities
 {
-    public abstract class Entity
+    public abstract class Entity : IHandleActions
     {
         public string Name { get; set; }
         public bool IsKnown { get; set; }
 
-        public Dictionary<Command, Func<Character, Character>> ActionMap { get; set; } 
+        public Dictionary<Command, Func<Character, Character>> ActionMap { get; } 
             = new Dictionary<Command, Func<Character, Character>>();
     }
 
@@ -21,9 +21,9 @@ namespace TextGame.Entities
             return entity;
         }
 
-        public static T AddHandler<T>(this T entity, Command command, Func<Character, Character> handler) where T : Entity
+        public static T SetHandler<T>(this T entity, Command command, Func<Character, Character> handler) where T : Entity
         {
-            entity.ActionMap.Add(command, handler);
+            entity.ActionMap[command] = handler;
             return entity;
         }
     }

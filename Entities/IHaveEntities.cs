@@ -3,14 +3,14 @@ using System.Linq;
 
 namespace TextGame.Entities
 {
-    public interface IHaveEntities
+    public interface IHaveEntities : ICanBeContext
     {
-        List<Entity> Entities { get; }
+        List<IHandleActions> Entities { get; }
     }
 
     public static class IHaveEntitiesExtensions 
     {
-        public static IList<Entity> GetKnownEntities(this IHaveEntities hasEntities) 
+        public static IList<IHandleActions> GetKnownEntities(this IHaveEntities hasEntities) 
         {
             return hasEntities.Entities
                 .Where(i => i.IsKnown)
@@ -18,13 +18,13 @@ namespace TextGame.Entities
 
         }
 
-        public static T WithEntity<T>(this T hasEntities, Entity entity) where T : IHaveEntities
+        public static T WithEntity<T>(this T hasEntities, IHandleActions entity) where T : IHaveEntities
         {
             hasEntities.Entities.Add(entity);
             return hasEntities;
         }
 
-        public static T ContainingEntities<T>(this T hasEntities, params Entity[] entities) where T : IHaveEntities
+        public static T ContainingEntities<T>(this T hasEntities, params IHandleActions[] entities) where T : IHaveEntities
         {
             hasEntities.Entities.AddRange(entities);
             return hasEntities;

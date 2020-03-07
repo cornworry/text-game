@@ -19,11 +19,16 @@ namespace TextGame.ExampleCampaign
                         .AppendLine("You're sitting on a hard stone floor in a small room. A door with bars at face height dominates one wall. One other person is lies in a heap in the corner.")
                         .AppendLine($"Your name is {character.Name}... you don't remember how you got here.");
 
+            var body = Item.Named("body");  
+
             var smallCell = Area.Named("a small cell")
                 .ContainingEntities(
-                    Item.Named("body").AddHandler(Command.Examine, CheckTheBody),
+                    body,
                     Portal.To(Area.Named("guard room"))
                 ); 
+
+            body.SetHandler(Command.Examine, c => ExamineTheBody(c, smallCell))
+                .SetHandler(Command.Search,  SearchTheBody);
 
             Game.FrameStack.Push(new Cutscene(introBuilder.ToString(), character => {
                 character.AddDebuff("head wound");
@@ -34,7 +39,14 @@ namespace TextGame.ExampleCampaign
             return character;
         }
 
-        private static Character CheckTheBody(Character character)
+        private static Character ExamineTheBody(Character character, Area smallCell)
+        {
+            var message = "The man is curled in a ball facing the corner. His shirt is torn and bloody. Shackles are affixed to his ankles. He chest rises and falls laboriously.";
+            Game.WriteLine(message);
+            return character;
+        }
+
+        private static Character SearchTheBody(Character character)
         {
             var message = "The man is curled in a ball facing the corner. His shirt is torn and bloody. Shackles are affixed to his ankles. He chest rises and falls laboriously.";
             Game.WriteLine(message);
