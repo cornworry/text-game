@@ -47,6 +47,13 @@ namespace TextGame
             return Console.ReadLine();
         }
 
+        public static void Write(string text, ConsoleColor color = ConsoleColor.Gray) 
+        {
+            Console.ForegroundColor = color;
+            Console.Write(text);
+            Console.ForegroundColor = ConsoleColor.Gray;
+        }
+
         public static void WriteLine(string text, ConsoleColor color = ConsoleColor.Gray) 
         {
             Console.ForegroundColor = color;

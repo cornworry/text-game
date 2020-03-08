@@ -29,6 +29,7 @@ namespace TextGame.Entities
             if(!TryGetTarget(context, targetName, out var target))
             {
                 Game.WriteLine($"There's nothing called \"{targetName}\" here.", ConsoleColor.Red);
+                return character;
             }
 
             Debug.WriteLine($"Found target: {target.Name}.");
@@ -54,7 +55,7 @@ namespace TextGame.Entities
                 outputEntity = hasEntities.Entities
                     .Where(e => e.IsKnown)
                     .FirstOrDefault(e => e.Name == targetName);
-                return true;
+                if(outputEntity != null) return true;
             }
 
             outputEntity = null;

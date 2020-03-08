@@ -1,3 +1,4 @@
+using ExampleCampaign.Areas;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,19 +17,19 @@ namespace TextGame.ExampleCampaign
         {
             var introBuilder = new StringBuilder();
             introBuilder.AppendLine("Your head aches. Your head feels wet and sticky.")
-                        .AppendLine("You're sitting on a hard stone floor in a small room. A door with bars at face height dominates one wall. One other person is lies in a heap in the corner.")
+                        .AppendLine("You're sitting on a hard stone floor in a small room. A door with bars at face height dominates one wall. Another body lies in a heap in one corner.")
                         .AppendLine($"Your name is {character.Name}... you don't remember how you got here.");
 
             var body = Item.Named("body");  
 
-            var smallCell = Area.Named("a small cell")
+            var smallCell = new SmallCell("a small cell")
                 .ContainingEntities(
                     body,
                     Portal.To(Area.Named("guard room"))
                 ); 
 
-            body.SetHandler(Command.Examine, c => ExamineTheBody(c, smallCell))
-                .SetHandler(Command.Search,  SearchTheBody);
+            body.SetHandler(Command.Examine, smallCell.ExamineTheBody)
+                .SetHandler(Command.Search,  smallCell.SearchTheBody);
 
             Game.FrameStack.Push(new Cutscene(introBuilder.ToString(), character => {
                 character.AddDebuff("head wound");
@@ -39,18 +40,6 @@ namespace TextGame.ExampleCampaign
             return character;
         }
 
-        private static Character ExamineTheBody(Character character, Area smallCell)
-        {
-            Game.WriteLine("The man is curled in a ball facing the corner. His shirt is torn and bloody. Shackles are affixed to his ankles. He chest rises and falls laboriously.");
-            return character;
-        }
-
-        private static Character SearchTheBody(Character character)
-        {
-            Game.WriteLine("As you begin searching the man he rolls onto his back. His eyelids part slightly to reveal his eyes rolled in the back of his head. He lets out a shudder.");
-            Game.WriteLine("\"PLEASE NO! I haven't...\"", ConsoleColor.Yellow);
-            Game.WriteLine("His chest lurches upward as he lets out a sigh. His body slumps back settling into unconsciousness.");
-            return character;
-        }
+       
     }
 }
