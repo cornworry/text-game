@@ -13,20 +13,18 @@ namespace TextGame
         static void Main(string[] args)
         {
             while(true) {
-                Frame.Do(TitleScreen.Play);
-                _character = Frame.Do(Character.GatherCharacter);
-
-                ICampaign campaign = new ExampleCampaign.ExampleCampaign();
-                campaign.Acts.ForEach(FrameStack.Push);
-                while(_character != null)
-                {
-                    if (!FrameStack.TryPop(out var frame)) {
-                        _character = HandleInput(_character);
-                        continue;
-                    }
-
-                    Frame.Do(() => _character = frame(_character));
+                // If we have no character clear the slate and start over.
+                if(FrameStack.Count == 0) {
+                    ICampaign campaign = new ExampleCampaign.ExampleCampaign();
+                    FrameStack.Push(campaign.FirstFrame);
                 }
+
+                if (!FrameStack.TryPop(out var frameFunc)) {
+                    _character = HandleInput(_character);
+                    continue;
+                }
+
+                Frame.Do(() => _character = frameFunc(_character));
             }
         }
 
