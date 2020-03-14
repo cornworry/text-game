@@ -16,10 +16,8 @@ namespace TextGame.Flow.Common
 
         public Character Play(Character character)
         {
-            return Frame.Do(() => {
-                Game.WriteLine($"{Message}\n", ConsoleColor.Green);
-                return _effects?.Invoke(character) ?? character;
-            });
+            Game.WriteLine($"{Message}\n", ConsoleColor.Green);
+            return _effects?.Invoke(character) ?? character;;
         }
     }
 }

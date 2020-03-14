@@ -1,6 +1,6 @@
 using System;
 
-namespace TextGame 
+namespace TextGame.ExampleCampaign 
 {
     class TitleScreen
     {

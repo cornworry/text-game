@@ -5,7 +5,7 @@ Creative title for creative project.
 
 ## Frames
 
-Frames are the most basic unit in the game scaffold.  A `Frame` is a way to subdivide the game into discrete scenes and interactions. The most basic form of a `Frame` is a message and nothing else, the death frame is a good example.
+Frames are the most basic unit in the game scaffold.  A `Frame` is a way to subdivide the game into discrete scenes and interactions. The most basic form of a `Frame` is a message and nothing else:
 
 ```
 -------------------------------------------------
@@ -13,7 +13,7 @@ Rock falls, you die.
 -------------------------------------------------
 ```
 
-Frames may also provide a link to the next `Frame` in the sequence. If you only provide a message and a link to the following `Frame`, you have a `Cutscene`.
+Frames may be placed on the stack using `Game#FrameStack`. Frames are processed first in last out.
 
 ```
 -------------------------------------------------

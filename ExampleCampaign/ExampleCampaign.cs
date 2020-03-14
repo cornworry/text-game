@@ -1,6 +1,4 @@
 using ExampleCampaign.Areas;
-using System;
-using System.Collections.Generic;
 using System.Text;
 using TextGame.Entities;
 using TextGame.Entities.Common;
@@ -11,9 +9,22 @@ namespace TextGame.ExampleCampaign
 {
     public class ExampleCampaign : ICampaign
     {
-        public List<Func<Character, Character>> Acts { get; } = new List<Func<Character, Character>>() { Act };
+        public Character FirstFrame(Character character)
+        {
+            TitleScreen.Play();
+            Game.FrameStack.Push(WakeUp);
 
-        public static Character Act(Character character)
+            // We probably don't have a character.
+            if(character == null) Game.FrameStack.Push(c => GetCharacterInfo());
+            return character;
+        }
+
+        public Character GetCharacterInfo() 
+        {
+            return Character.GatherCharacter();
+        }
+
+        public static Character WakeUp(Character character)
         {
             var introBuilder = new StringBuilder();
             introBuilder.AppendLine("Your head aches. Your head feels wet and sticky.")
@@ -31,13 +42,11 @@ namespace TextGame.ExampleCampaign
             body.SetHandler(Command.Examine, smallCell.ExamineTheBody)
                 .SetHandler(Command.Search,  smallCell.SearchTheBody);
 
-            Game.FrameStack.Push(new Cutscene(introBuilder.ToString(), character => {
+            return new Cutscene(introBuilder.ToString(), character => {
                 character.AddDebuff("head wound");
                 character.SetContext(smallCell);
                 return character;
-            }).Play);
-            
-            return character;
+            }).Play(character);
         }
 
        
