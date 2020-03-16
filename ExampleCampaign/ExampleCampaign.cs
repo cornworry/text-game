@@ -15,25 +15,18 @@ namespace TextGame.ExampleCampaign
             campaign.Play();
         }
 
-        private TextGame _game;
-
-        public ExampleCampaign()
-        {
-            _game = new TextGame();
-        }
-
         public void Play()
         {
-            _game.Start(this);
+            TextGame.Start(this);
         }
         
         public Character FirstFrame(Character character)
         {
             TitleScreen.Play();
-            _game.Push(WakeUp);
+            TextGame.Push(WakeUp);
 
             // We probably don't have a character.
-            if(character == null) _game.Push(c => GetCharacterInfo());
+            if(character == null) TextGame.Push(c => GetCharacterInfo());
             return character;
         }
 

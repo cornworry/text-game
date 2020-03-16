@@ -7,14 +7,9 @@ namespace TextGame
 {
     public class TextGame
     {
-        private Stack<Func<Character, Character>> _frameStack { get; }
+        private static Stack<Func<Character, Character>> _frameStack { get; } = new Stack<Func<Character, Character>>();
 
-        public TextGame() 
-        {
-            _frameStack = new Stack<Func<Character, Character>>();
-        }
-
-        public void Start(ICampaign campaign)
+        public static void Start(ICampaign campaign)
         {
             Character character = null;
             _frameStack.Push(campaign.FirstFrame);
@@ -31,7 +26,7 @@ namespace TextGame
             }
         }
 
-        internal void Push(Func<Character, Character> frame)
+        public static void Push(Func<Character, Character> frame)
         {
             _frameStack.Push(frame);
         }
