@@ -1,40 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
-using TextGame.Entities;
+using System.Linq;
 using TextGame.Flow;
 
 namespace TextGame
 {
-    class Game
+    public class TextGame
     {
-        private static Character _character;
-        public static Stack<Func<Character, Character>> FrameStack { get; } = new Stack<Func<Character, Character>>();
+        private Stack<Func<Character, Character>> _frameStack { get; }
 
-        static void Main(string[] args)
+        public TextGame() 
         {
+            _frameStack = new Stack<Func<Character, Character>>();
+        }
+
+        public void Start(ICampaign campaign)
+        {
+            Character character = null;
+            _frameStack.Push(campaign.FirstFrame);
             while(true) {
-                // If we have no character clear the slate and start over.
-                if(FrameStack.Count == 0) {
-                    ICampaign campaign = new ExampleCampaign.ExampleCampaign();
-                    FrameStack.Push(campaign.FirstFrame);
+                if (!_frameStack.TryPop(out var frameFunc)) {
+                    frameFunc = campaign.DefaultFrame;
                 }
 
-                if (!FrameStack.TryPop(out var frameFunc)) {
-                    _character = HandleInput(_character);
-                    continue;
+                Frame.Do(() => character = frameFunc(character));
+                if(character == null && !_frameStack.Any())
+                {
+                    return;
                 }
-
-                Frame.Do(() => _character = frameFunc(_character));
             }
         }
 
-        public static Character HandleInput(Character character) {
-            var input = GetInput("What now?");
-            character.Context.HandleInput(character, input);
-            return character;
+        internal void Push(Func<Character, Character> frame)
+        {
+            _frameStack.Push(frame);
         }
 
-        public static void WriteHelpText()
+        public void WriteHelpText()
         {
             Console.WriteLine("Help text coming soon...", ConsoleColor.Green);
         }

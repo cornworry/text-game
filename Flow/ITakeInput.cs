@@ -14,7 +14,7 @@ namespace TextGame.Flow
         {
             string input = null;
             while(input == null || !inputDevice.IsValid(input)) {
-                input = Game.GetInput(inputDevice.Prompt);
+                input = TextGame.GetInput(inputDevice.Prompt);
             }
             return input;
         }

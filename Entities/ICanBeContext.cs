@@ -16,7 +16,7 @@ namespace TextGame.Entities
             var command = CommandParser.From(commandInput);
 
             if(command == null) {
-                Game.WriteLine($"Unknown command: \"{commandInput}\"");
+                TextGame.WriteLine($"Unknown command: \"{commandInput}\"");
                 return character;
             }
 
@@ -28,7 +28,7 @@ namespace TextGame.Entities
             // The target is the area.
             if(!TryGetTarget(context, targetName, out var target))
             {
-                Game.WriteLine($"There's nothing called \"{targetName}\" here.", ConsoleColor.Red);
+                TextGame.WriteLine($"There's nothing called \"{targetName}\" here.", ConsoleColor.Red);
                 return character;
             }
 
@@ -37,7 +37,7 @@ namespace TextGame.Entities
                 return action.Invoke(character);
             }
 
-            Game.WriteLine($"You can't do that right now.");
+            TextGame.WriteLine($"You can't do that right now.");
             return character;
         }
 

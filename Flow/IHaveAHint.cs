@@ -11,7 +11,7 @@ namespace TextGame.Flow
     {
         public static void HandleHints(this IHaveAHint hasHint) 
         {
-            Game.WriteLine(hasHint?.Hint == null ? "There are no clues here." : hasHint.Hint,
+            TextGame.WriteLine(hasHint?.Hint == null ? "There are no clues here." : hasHint.Hint,
                 ConsoleColor.Green);
         }
     }

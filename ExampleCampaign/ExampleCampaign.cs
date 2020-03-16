@@ -9,13 +9,38 @@ namespace TextGame.ExampleCampaign
 {
     public class ExampleCampaign : ICampaign
     {
+        static void Main(string[] args)
+        {
+            var campaign = new ExampleCampaign();
+            campaign.Play();
+        }
+
+        private TextGame _game;
+
+        public ExampleCampaign()
+        {
+            _game = new TextGame();
+        }
+
+        public void Play()
+        {
+            _game.Start(this);
+        }
+        
         public Character FirstFrame(Character character)
         {
             TitleScreen.Play();
-            Game.FrameStack.Push(WakeUp);
+            _game.Push(WakeUp);
 
             // We probably don't have a character.
-            if(character == null) Game.FrameStack.Push(c => GetCharacterInfo());
+            if(character == null) _game.Push(c => GetCharacterInfo());
+            return character;
+        }
+
+        public Character DefaultFrame(Character character)
+        {
+            var input = TextGame.GetInput("What now?");
+            character.Context.HandleInput(character, input);
             return character;
         }
 
@@ -24,7 +49,7 @@ namespace TextGame.ExampleCampaign
             return Character.GatherCharacter();
         }
 
-        public static Character WakeUp(Character character)
+        public Character WakeUp(Character character)
         {
             var introBuilder = new StringBuilder();
             introBuilder.AppendLine("Your head aches. Your head feels wet and sticky.")

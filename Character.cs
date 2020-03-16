@@ -23,13 +23,13 @@ namespace TextGame {
         internal void SetContext(ICanBeContext context) 
         {
             var location = context as Area;
-            if(location != null) Game.WriteLine($"You are now in a new location: {context.Name}.", ConsoleColor.DarkGreen);
+            if(location != null) TextGame.WriteLine($"You are now in a new location: {context.Name}.", ConsoleColor.DarkGreen);
             Context = location;
         }
 
         internal void AddDebuff(string v)
         {
-            Game.WriteLine($"You have a new debuff: {v}.", ConsoleColor.Red);
+            TextGame.WriteLine($"You have a new debuff: {v}.", ConsoleColor.Red);
             Debuffs.Add(v);
         }
     }
