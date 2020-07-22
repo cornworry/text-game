@@ -13,7 +13,7 @@ Rock falls, you die.
 -------------------------------------------------
 ```
 
-Frames may be placed on the stack using `Game#FrameStack`. Frames are processed first in last out.
+Frames may be placed on the stack using `Game#FrameStack`.
 
 ```
 -------------------------------------------------

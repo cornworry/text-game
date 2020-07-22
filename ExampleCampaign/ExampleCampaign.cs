@@ -45,17 +45,16 @@ namespace TextGame.ExampleCampaign
         public Character WakeUp(Character character)
         {
             var introBuilder = new StringBuilder();
-            introBuilder.AppendLine("Your head aches. Your head feels wet and sticky.")
-                        .AppendLine("You're sitting on a hard stone floor in a small room. A door with bars at face height dominates one wall. Another body lies in a heap in one corner.")
+            introBuilder.AppendLine("Your head aches. You touch your forehead and it comes away wet and sticky.")
+                        .AppendLine("You're sitting on a hard stone floor. Stone walls on all sides. A barred door dominates one wall. Someone else lies in a heap in one corner.")
                         .AppendLine($"Your name is {character.Name}... you don't remember how you got here.");
 
             var body = Item.Named("body");  
+            var guardRoom = Area.Named("guard room");
+            var portal = Portal.To(guardRoom).Locked();
 
             var smallCell = new SmallCell("a small cell")
-                .ContainingEntities(
-                    body,
-                    Portal.To(Area.Named("guard room"))
-                ); 
+                .ContainingEntities(body, portal); 
 
             body.SetHandler(Command.Examine, smallCell.ExamineTheBody)
                 .SetHandler(Command.Search,  smallCell.SearchTheBody);

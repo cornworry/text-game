@@ -27,6 +27,8 @@ namespace TextGame {
             Context = location;
         }
 
+        //TODO: Add type for debuff. Type and params. 
+        //TODO: For a head wound type of Injury, and Head as a location param.
         internal void AddDebuff(string v)
         {
             TextGame.WriteLine($"You have a new debuff: {v}.", ConsoleColor.Red);
